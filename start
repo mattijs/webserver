@@ -1,0 +1,6 @@
+#!/bin/bash
+
+cwd=$(pwd)
+export PYTHONPATH=$cwd/src:$PYTHONPATH
+
+/usr/bin/python main.py
