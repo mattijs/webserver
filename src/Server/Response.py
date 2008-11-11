@@ -71,10 +71,21 @@ class Response(object):
         # build the status line
         self._setStatusLine('200', 'OK')
     
-    def _getFullFilePath(self, requestedFile):
+    def _processRequestedFile(self, requestedFile):
+        requestedFilePath = self._server.documentRoot + requestedFile
         # check if the request was for a file or a directory
-        if os.path.isdir(requestedFile):
-            pass
+        if os.path.isdir(requestedFilePath):
+	    # check if one of the index files exists in the directory
+            for doc in self._server.documentIndex:
+                if os.path.isfile(requestedFilePath + doc):
+                    requestedFilePath += doc
+                    return requestedFilePath
+
+	elif os.path.isfile(requestedFilePath) :
+	    return requestedFile
+	
+	return None
+	    
 
     def _addResponseHeader(self, name, value):
         self._responseHeaders[name] = value
