@@ -1,5 +1,3 @@
-#@todo: fix python include path
-import socket, string
 from Server import Server
 
 def main():
